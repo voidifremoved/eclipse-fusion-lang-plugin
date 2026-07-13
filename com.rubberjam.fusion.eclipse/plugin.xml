@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension point="org.eclipse.ui.editors">
+      <editor
+            class="com.rubberjam.fusion.eclipse.editor.FusionEditor"
+            default="true"
+            extensions="fu"
+            id="com.rubberjam.fusion.eclipse.editor"
+            name="Fusion Editor">
+      </editor>
+   </extension>
+</plugin>

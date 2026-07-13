@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Fusion Eclipse Plugin
+Bundle-SymbolicName: com.rubberjam.fusion.eclipse;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Rubberjam
+Bundle-RequiredExecutionEnvironment: JavaSE-21
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.jface.text,
+ org.eclipse.ui.editors
+Bundle-ActivationPolicy: lazy
