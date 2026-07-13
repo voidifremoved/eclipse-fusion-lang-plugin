@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Fusion Eclipse Plugin Tests
+Bundle-SymbolicName: com.rubberjam.fusion.eclipse.tests
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Rubberjam
+Fragment-Host: com.rubberjam.fusion.eclipse
+Automatic-Module-Name: com.rubberjam.fusion.eclipse.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-21
+Require-Bundle: junit-jupiter-api,
+ junit-platform-commons,
+ org.opentest4j

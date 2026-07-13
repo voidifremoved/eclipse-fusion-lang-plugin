@@ -1,4 +1,8 @@
 target/
+**/target/
+bin/
+**/bin/
+*.class
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -7,13 +11,15 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-# https://maven.apache.org/tools/wrapper/#Usage_with_or_without_Binary_JAR
 .mvn/wrapper/maven-wrapper.jar
 
-# Eclipse m2e generated files
-# Eclipse Core
-.project
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
-jdk-22.0.2/
-openjdk-22.0.2_linux-x64_bin.tar.gz
+# Generated p2 site copies (if produced locally under site/)
+/site/artifacts.jar
+/site/content.jar
+/site/features/
+/site/plugins/
+
+# Local JDK archives accidentally left in the tree
+jdk-*/
+openjdk-*.tar.gz
+/.project

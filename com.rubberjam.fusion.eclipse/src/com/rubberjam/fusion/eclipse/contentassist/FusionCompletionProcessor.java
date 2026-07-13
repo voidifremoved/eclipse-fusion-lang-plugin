@@ -10,17 +10,9 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 
-public class FusionCompletionProcessor implements IContentAssistProcessor {
+import com.rubberjam.fusion.eclipse.FusionKeywords;
 
-    private static final String[] PROPOSALS = {
-        "abstract", "base", "bool", "break", "byte", "case", "class", "const",
-        "continue", "default", "do", "double", "else", "enum", "false", "float",
-        "for", "foreach", "if", "in", "int", "internal", "is", "lock", "long",
-        "native", "new", "nint", "null", "override", "protected", "public",
-        "resource", "return", "sbyte", "sealed", "short", "static", "string",
-        "switch", "this", "throw", "throws", "true", "uint", "ushort", "virtual",
-        "void", "when", "while", "assert"
-    };
+public class FusionCompletionProcessor implements IContentAssistProcessor {
 
     @Override
     public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int offset) {
@@ -32,7 +24,7 @@ public class FusionCompletionProcessor implements IContentAssistProcessor {
         String prefix = text.substring(start, offset);
 
         List<ICompletionProposal> proposals = new ArrayList<>();
-        for (String proposal : PROPOSALS) {
+        for (String proposal : FusionKeywords.KEYWORDS) {
             if (proposal.startsWith(prefix)) {
                 proposals.add(new CompletionProposal(proposal, start, offset - start, proposal.length()));
             }

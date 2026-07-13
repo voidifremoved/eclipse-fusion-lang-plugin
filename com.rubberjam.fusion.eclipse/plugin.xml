@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            base-type="org.eclipse.core.runtime.text"
+            file-extensions="fu"
+            id="com.rubberjam.fusion.eclipse.fusionSource"
+            name="Fusion Source File"
+            priority="high">
+      </content-type>
+   </extension>
+
    <extension point="org.eclipse.ui.editors">
       <editor
             class="com.rubberjam.fusion.eclipse.editor.FusionEditor"
             default="true"
-            extensions="fu"
             id="com.rubberjam.fusion.eclipse.editor"
             name="Fusion Editor">
+         <contentTypeBinding contentTypeId="com.rubberjam.fusion.eclipse.fusionSource"/>
       </editor>
    </extension>
 </plugin>

@@ -1,0 +1,69 @@
+name: Build and Deploy Eclipse Update Site
+
+on:
+  push:
+    branches: ["master"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Tycho
+        run: |
+          chmod +x mvnw
+          ./mvnw --batch-mode "-Dtycho.localArtifacts=ignore" clean verify
+
+      - name: Upload test logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-logs
+          path: |
+            **/target/surefire-reports/
+          if-no-files-found: ignore
+
+      - name: Prepare Eclipse Update Site
+        run: |
+          mkdir -p deploy
+          cp -r releng/com.rubberjam.fusion.repository/target/repository/. deploy/
+          cp site/index.html deploy/
+          cp site/site.xml deploy/
+          cp -r site/web deploy/ || true
+          FEATURE_VERSION=$(basename deploy/features/com.rubberjam.fusion_*.jar .jar | sed 's/com.rubberjam.fusion_//')
+          sed -i -E "s/[0-9]+\.[0-9]+\.[0-9]+\.qualifier/$FEATURE_VERSION/g" deploy/site.xml
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: 'deploy'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

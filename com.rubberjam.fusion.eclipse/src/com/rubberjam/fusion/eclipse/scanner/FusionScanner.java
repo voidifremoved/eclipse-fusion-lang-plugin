@@ -4,34 +4,25 @@ import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.EndOfLineRule;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.IWordDetector;
 import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
-import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
-import org.eclipse.jface.text.rules.IWordDetector;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.RGB;
+
+import com.rubberjam.fusion.eclipse.FusionKeywords;
 import com.rubberjam.fusion.eclipse.editor.ColorManager;
+import com.rubberjam.fusion.eclipse.editor.FusionSyntaxColors;
 
 public class FusionScanner extends RuleBasedScanner {
 
-    private static final String[] KEYWORDS = {
-        "abstract", "base", "bool", "break", "byte", "case", "class", "const",
-        "continue", "default", "do", "double", "else", "enum", "false", "float",
-        "for", "foreach", "if", "in", "int", "internal", "is", "lock", "long",
-        "native", "new", "nint", "null", "override", "protected", "public",
-        "resource", "return", "sbyte", "sealed", "short", "static", "string",
-        "switch", "this", "throw", "throws", "true", "uint", "ushort", "virtual",
-        "void", "when", "while", "assert"
-    };
-
     public FusionScanner(ColorManager colorManager) {
-        IToken keywordToken = new Token(new TextAttribute(colorManager.getColor(new RGB(127, 0, 85)), null, SWT.BOLD));
-        IToken stringToken = new Token(new TextAttribute(colorManager.getColor(new RGB(42, 0, 255))));
-        IToken commentToken = new Token(new TextAttribute(colorManager.getColor(new RGB(63, 127, 95))));
-        IToken defaultToken = new Token(new TextAttribute(colorManager.getColor(new RGB(0, 0, 0))));
+        IToken keywordToken = new Token(new TextAttribute(colorManager.getColor(FusionSyntaxColors.keyword()), null, SWT.BOLD));
+        IToken stringToken = new Token(new TextAttribute(colorManager.getColor(FusionSyntaxColors.stringLiteral())));
+        IToken commentToken = new Token(new TextAttribute(colorManager.getColor(FusionSyntaxColors.comment())));
+        IToken defaultToken = new Token(new TextAttribute(colorManager.getColor(FusionSyntaxColors.defaultText())));
 
         IRule[] rules = new IRule[5];
 
@@ -52,7 +43,7 @@ public class FusionScanner extends RuleBasedScanner {
             }
         }, defaultToken);
 
-        for (String keyword : KEYWORDS) {
+        for (String keyword : FusionKeywords.KEYWORDS) {
             wordRule.addWord(keyword, keywordToken);
         }
         rules[4] = wordRule;

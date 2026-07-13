@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="Fusion Language Support for Eclipse IDE" url="https://voidifremoved.github.io/fusion-eclipse-plugin/">
+      Eclipse update site for the Fusion language editor plugin.
+   </description>
+   <feature url="features/com.rubberjam.fusion_1.0.0.qualifier.jar" id="com.rubberjam.fusion" version="1.0.0.qualifier"/>
+</site>

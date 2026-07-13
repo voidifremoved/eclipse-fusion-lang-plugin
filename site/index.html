@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>Fusion Language Support - Eclipse Update Site</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>@import url("web/site.css");</style>
+<script type="text/javascript">
+function loadXMLFile(url) {
+  return new Promise(function(resolve, reject) {
+    var request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.onreadystatechange = function() {
+      if (request.readyState === 4) {
+        if (request.status === 200 || request.status === 0) {
+          resolve(request.responseXML);
+        } else {
+          reject(Error("Error loading XML file: " + request.statusText));
+        }
+      }
+    };
+    request.send(null);
+  });
+}
+
+function init() {
+  Promise.all([loadXMLFile("site.xml"), loadXMLFile("web/site.xsl")])
+    .then(function(results) {
+      var xmlFile = results[0];
+      var stylesheet = results[1];
+      var processor = new XSLTProcessor();
+      processor.importStylesheet(stylesheet);
+      var doc = processor.transformToDocument(xmlFile);
+      document.getElementById("data").innerHTML = doc.documentElement.innerHTML;
+    })
+    .catch(function(error) {
+      document.getElementById("data").innerHTML =
+        "<h1 class=\"title\">Fusion Language Support</h1>" +
+        "<p class=\"bodyText\">Use this URL in Eclipse: Help → Install New Software → Add.</p>" +
+        "<p class=\"bodyText\">Error rendering catalog: " + error.message + "</p>";
+    });
+}
+</script>
+</head>
+<body onload="init();">
+<div id="data"><!-- transformed catalog --></div>
+</body>
+</html>
