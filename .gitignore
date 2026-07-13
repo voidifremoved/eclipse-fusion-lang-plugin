@@ -15,3 +15,5 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+jdk-22.0.2/
+openjdk-22.0.2_linux-x64_bin.tar.gz
